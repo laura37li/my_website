@@ -1,6 +1,6 @@
 baseURL: https://xiaofanli-portfolio.netlify.app/
 languageCode: en-us
-title: The portfolio website for Xiaofan Li
+title: The individual website for Xiaofan Li
 theme: forty
 googleAnalytics: ''
 disqusShortname: ''
@@ -8,9 +8,8 @@ params:
   banner:
     buttonText: Get Started
     subtitle: |-
-      #A RESPONSIVE SITE TEMPLATE DESIGNED BY HTML5 UP
-      #AND RELEASED UNDER THE CREATIVE COMMONS.
-    title: Li Xiaofan, this is the individual assignment of MFA 2022 Li Xiaofan
+      Hi! Welcome to my website. This shows what I've been up to recently. 
+    title: Hi this is Laura Li!
   blog: {}
   contact:
     address:
