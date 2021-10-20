@@ -1,6 +1,7 @@
 ---
 title: "CV"
 output: html_document
+slug: CV
 ---
 ```{r image 1, echo = FALSE, out.width="100%"}
 knitr:: include_graphics("/img/CV.jpg", error = FALSE)

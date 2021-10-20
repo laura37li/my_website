@@ -1,6 +1,7 @@
 ---
 title: "Yield Curve Inversion"
 output: html_document
+slug: project
 ---
 ## Plot yield curve for recession prediction *MATLAB*
 
@@ -13,7 +14,7 @@ output: html_document
 
 *Figure 1: Yields on US rates by duration since 1960 *
 
-```{r image 2, echo = FALSE, out.width="60%"}
+```{r image 1, echo = FALSE, out.width="60%"}
 knitr:: include_graphics("/img/yield_by_duration.png", error = FALSE)
 ```
      
@@ -58,7 +59,7 @@ knitr:: include_graphics("/img/monthly_yield.png", error = FALSE)
 
 *Figure 3: 3-month and 10-year yields since 1999 *
 
-```{r image 2, echo = FALSE, out.width="60%"}
+```{r image 3, echo = FALSE, out.width="60%"}
 knitr:: include_graphics("/img/3-10.png", error = FALSE)
 ``` 
 
