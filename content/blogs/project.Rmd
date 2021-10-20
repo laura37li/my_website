@@ -3,7 +3,7 @@ title: "Yield Curve Inversion"
 output: html_document
 slug: project
 ---
-## Plot yield curve for recession prediction *MATLAB*
+## Plot yield curve for recession prediction
 
 > **Every so often, we hear warnings from commentators on the "inverted yield curve" and its predictive power with respect to recessions. In our case we will look at US data and use the FRED database to download historical yield curve rates, and plot the yield curves since 1999 to see when the yield curves flatten. **
 

@@ -18,10 +18,10 @@ Graduated as the excellent of graduats of class 2021
 - Outstanding Undergraduates Scholarships
 - State-funded exchange in Kedge Business School in France
 
-```{r}
+```{r,image 1, echo = FALSE, out.width="30%"}
 knitr::include_graphics("/img/London_Business_School.jpg",error =FALSE)
 ```
 
-```{r}
+```{r,image 2, echo = FALSE, out.width="30%"}
 knitr::include_graphics("/img/SYSU.jpg",error =FALSE)
 ```
