@@ -1,0 +1,121 @@
+---
+title: "Yield Curve Inversion"
+output: html_document
+---
+## Plot yield curve for recession prediction *MATLAB*
+
+> **Every so often, we hear warnings from commentators on the "inverted yield curve" and its predictive power with respect to recessions. In our case we will look at US data and use the FRED database to download historical yield curve rates, and plot the yield curves since 1999 to see when the yield curves flatten. **
+
+
+### The Code
+
+#### Code for plotting the yield curve 
+
+*Figure 1: Yields on US rates by duration since 1960 *
+
+```{r image 2, echo = FALSE, out.width="60%"}
+knitr:: include_graphics("/img/yield_by_duration.png", error = FALSE)
+```
+     
+      yield_curve_1<-yield_curve%>%
+      group_by(duration)%>%
+      mutate(durationf=factor(duration,levels=c("3-Month         Treasury Bill","6-Month Treasury Bill","1-Year           Treasury Bill","2-Year Treasury Bill","3-Year            Treasury Bill","5-Year Treasury Bill","7-Year            Treasury Bill","10-Year Treasury Bill","20-Year          Treasury Bill","30-Year Treasury Bill")))
+      ggplot(yield_curve_1,aes(x=date,y=value,
+              color=duration))+
+              geom_line()+
+              facet_wrap(~duration,ncol=2,scales="free")+
+              theme_bw()+
+              theme(legend.position="none",
+                    text = element_text(size=8))
+
+*Figure 2: Monthly yields on US rates by duration since 1999 on a year-by-year basis *
+
+```{r image 2, echo = FALSE, out.width="60%"}
+knitr:: include_graphics("/img/monthly_yield.png", error = FALSE)
+``` 
+
+    library(lubridate)
+    yield_curve_year<-yield_curve%>%
+    mutate(year=as.numeric(year(date)),
+            month=as.numeric(month(date)))%>%
+    arrange(year)%>%
+    mutate(yearf=factor(year,levels=unique(year)))%>%
+    mutate(maturity=factor(maturity,
+            levels=c("3m","6m","1y","2y","3y",
+            "5y","7y","10y","20y","30y")))
+
+    yield_curve_year_1999<-yield_curve_year%>%
+    filter(year %in% c(1999:2021))
+
+    ggplot(yield_curve_year_1999,
+            aes(x=maturity,y=value,color=year,
+            group=month))+
+            geom_line()+
+            facet_wrap(~yearf,ncol=4)+
+            theme_bw()+
+            theme(legend.position="none",
+                  text = element_text(size=7))
+
+*Figure 3: 3-month and 10-year yields since 1999 *
+
+```{r image 2, echo = FALSE, out.width="60%"}
+knitr:: include_graphics("/img/3-10.png", error = FALSE)
+``` 
+
+    yield_curve_year_1999_1<-yield_curve_year_1999%>%
+    filter(maturity%in%c("3m","10y"))
+    ggplot(yield_curve_year_1999_1,
+            aes(x=date,y=value,color=duration))+
+            geom_line()+
+            labs(title="Yields on 3-month and 10-year US Treasury rates since 1999")+
+            theme_bw()+theme(text = element_text(size=7))
+
+#### Code for plotting colored yield gap between 3-month and 10-year to discover recession 
+
+*Figure 4: Yield Curve inversion*
+
+```{r image, echo = FALSE,  out.width="60%"}
+knitr:: include_graphics("/img/yield_curve.jpg", error = FALSE)
+```
+
+*Create a Dataset for 3m and 10y maturities*
+    
+    Database_3m_10y <- yield_curve %>%
+    filter(maturity %in% c("3m","10y"))  
+
+*Dataset for 3m maturities*  
+    
+    Database_3m <- Database_3m_10y %>%
+    filter(maturity=="3m") %>% 
+    mutate(value_3m=value)
+
+*Dataset for 10y maturities*
+    
+    Database_10y <- Database_3m_10y %>%
+    filter(maturity=="10y") %>% 
+    mutate(value_10y=value)
+
+*Merge the 3m and 10y dataset and create a new column with the delta of the yield*
+  
+    chart<-merge(x = Database_10y, y = Database_3m,by="date") %>%
+    mutate(delta=value_10y-value_3m)
+
+*Add the colours for delta*
+
+    ggplot( ) + 
+    geom_ribbon(data=chart, aes(x=date, y=delta, ymin = 0, ymax = pmax(delta, 0), fill = "positive")) + 
+    geom_rug()+
+    geom_ribbon(data=chart, aes(x=date, y=delta, ymin = pmin(delta, 0), ymax =0 , fill = "negative")) +
+    scale_fill_manual(values=c("lightcoral","lightskyblue2")) +
+  
+*Add colours for recession*  
+    
+    geom_rect(data=recessions, mapping=aes(xmin = From, xmax = To, ymin = -Inf, ymax = Inf, alpha = .5),fill = "grey60") + 
+    theme(legend.position = "none")+
+    geom_rug(data=chart, aes(x=date, y=delta, ymin = 0, ymax = pmax(delta, 0), alpha=0.5), sides = "b",colour="grey60") +
+    labs(title = "Yield Curve Inversion: 10-year minus 3-month U.S. Tresury rates",
+    subtitle = "Difference in % points, monthly averages.",
+    x="",
+    y="Difference (10 year-3 month) yield in %", 
+    caption="Source: FRED, Federal Reserve Bank of St Louis")+
+    NULL

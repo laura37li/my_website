@@ -1,0 +1,27 @@
+---
+title: "Education"
+output: html_document
+---
+# London Business School
+## Master in Financial Analysis  2021-2022
+- Securities Valuation and Financial Modelling
+- Assets Management
+- Data Analysis for Finance
+
+
+# Sun Yat-sen University 
+## BBA in Management  2017-2021
+Graduated as the excellent of graduats of class 2021 
+
+- Business school Case Club Vice President
+- Ranking the top 5% in academic performance
+- Outstanding Undergraduates Scholarships
+- State-funded exchange in Kedge Business School in France
+
+```{r}
+knitr::include_graphics("/img/London_Business_School.jpg",error =FALSE)
+```
+
+```{r}
+knitr::include_graphics("/img/SYSU.jpg",error =FALSE)
+```
